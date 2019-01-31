@@ -1,3 +1,12 @@
 body {
+  padding:
+    env(safe-area-inset-top, spacing(m))
+    env(safe-area-inset-right)
+    env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+
+  background-color: #21D4FD;
+  background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+
   color: color(base);
 }

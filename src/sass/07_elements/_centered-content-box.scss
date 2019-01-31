@@ -1,0 +1,11 @@
+.centered-content-box {
+  height: 100%;
+  min-height: inherit;
+
+  display: flex;
+
+
+  > * {
+    margin: auto;
+  }
+}

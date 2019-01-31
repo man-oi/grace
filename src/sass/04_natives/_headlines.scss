@@ -12,6 +12,9 @@ h6, .h6 {
 
 h1,
 .h1 {
+  padding-bottom: text-spacing(s);
+  border-bottom: 4px solid currentColor;
+
   @include font-size(h1);
 }
 

@@ -3,9 +3,10 @@
   margin-bottom: 0;
 }
 
-.site-inner {
-  width: 100%;
-  max-width: $page-max-size;
-  margin-right: auto;
-  margin-left: auto;
-}
+  .site-inner {
+    width: 100%;
+    max-width: $page-max-size;
+    min-height: 100vh;
+    margin-right: auto;
+    margin-left: auto;
+  }
