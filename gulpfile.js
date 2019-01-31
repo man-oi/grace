@@ -22,8 +22,6 @@ const svgo = require('imagemin-svgo');
 const browserSync = require('browser-sync');
 const del = require('del');
 
-const iconsToStrings = require('./scripts/generate-icons-list.js');
-
 
 /*
     CONFIG
@@ -370,20 +368,11 @@ function imagemin_lossless() {
   .pipe(gulp.dest(`${paths.images.dest}_lossless`))
 }
 
-// Icons to Strings
-function icons(done) {
-  iconsToStrings().then(() => {
-    console.log('is done');
-    done();
-  });
-}
-
 const images = gulp.series(
   delete_images,
   imagemin_compress,
   imagemin_highq,
   imagemin_lossless,
-  icons,
 );
 exports.images = images;
 
@@ -436,7 +425,6 @@ exports.dev = dev;
 const build = gulp.series(
   include,
   gulp.parallel(html, styles, scripts, fonts),
-  images,
-  icons
+  images
 );
 exports.default = build;
