@@ -18,6 +18,7 @@ const mozjpeg = require('imagemin-mozjpeg');
 const jpegtran = require('imagemin-jpegtran');
 const pngquant = require('imagemin-pngquant');
 const svgo = require('imagemin-svgo');
+const webp = require('imagemin-webp');
 
 const browserSync = require('browser-sync');
 const del = require('del');
@@ -41,7 +42,8 @@ const paths = {
   },
   images: {
     src: 'src/img',
-    dest: 'dist/img/'
+    dest: 'dist/img/',
+    destD: 'dist/img_'
   },
   fonts: {
     src: 'src/fonts',
@@ -333,9 +335,26 @@ function imagemin_compress() {
       `!${paths.images.src}/_highq/**/*`,
     ])
     .pipe(imagemin([
-      mozjpeg({progressive: true, quality: 85}),
-      pngquant({speed: 6, quality: 80}),
-      svgo(config.svgo)
+      mozjpeg({progressive: true, quality: 75}),
+      pngquant({speed: 6, quality: 75}),
+      svgo(config.svgo),
+    ]))
+    .pipe(gulp.dest(paths.images.destD))
+}
+
+function imagemin_compress_webp() {
+  return gulp.src([
+      `${paths.images.src}/**/*`,
+      `${paths.images.src}/icons/**/*`,
+
+      // not files / directories below
+      `!${paths.images.src}/**/*.md`,
+      `!${paths.images.src}/_lossless/**/*`,
+      `!${paths.images.src}/_highq/**/*`,
+    ])
+    .pipe(imagemin([
+      webp({alphaQuality: 100, quality: 75}),
+      svgo(config.svgo),
     ]))
     .pipe(gulp.dest(paths.images.dest))
 }
@@ -348,8 +367,7 @@ function imagemin_highq() {
     `!${paths.images.src}/_highq/**/*.md`,
   ])
   .pipe(imagemin([
-    mozjpeg({progressive: true, quality: 95}),
-    pngquant({speed: 6, quality: 95}),
+    webp({alphaQuality: 100, quality: 95}),
   ]))
   .pipe(gulp.dest(`${paths.images.dest}_highq`))
 }
@@ -362,8 +380,7 @@ function imagemin_lossless() {
     `!${paths.images.src}/_lossless/**/*.md`,
   ])
   .pipe(imagemin([
-    jpegtran({progessive: true}),
-    pngquant({speed: 6, quality: 100}),
+    webp({alphaQuality: 100, quality: 100}),
   ]))
   .pipe(gulp.dest(`${paths.images.dest}_lossless`))
 }
@@ -420,6 +437,13 @@ const dev = gulp.series(
   watch
 );
 exports.dev = dev;
+
+const image_demo = gulp.series(
+  delete_images,
+  imagemin_compress,
+  imagemin_compress_webp
+)
+exports.image_demo = image_demo;
 
 
 const build = gulp.series(
