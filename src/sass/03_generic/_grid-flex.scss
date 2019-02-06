@@ -40,9 +40,9 @@
   }
   @each $device,
   $screen-device in (xl, $screen-xl),
-  (lg, $screen-lg),
+  (sm, $screen-sm),
   (md, $screen-md),
-  (sm, $screen-sm) {
+  (lg, $screen-lg) {
     @media #{$screen-device} {
       @for $i from 1 through $grid-columns {
         .col-#{$device}-#{$i} {
