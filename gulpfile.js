@@ -51,8 +51,8 @@ const paths = {
 
 const config = {
   // see browserlist: http://browserl.ist/
-  browsers: ['Safari >= 10.1', 'Firefox >= 60', 'Chrome >= 61', 'iOS >= 10.3', 'not IE <= 11', 'Edge >= 16'],
-  browsers_legacy: ['last 4 versions', '> 1%', 'not ie <= 10', 'not Edge <= 13', 'Safari >= 8', 'Firefox ESR'],
+  browsers: ['last 4 versions', 'Safari >= 10.1', 'Firefox ESR', 'iOS >= 10.3', 'not IE <= 11', 'not < 0.05%'],
+  browsers_legacy: ['ie >= 10', 'Edge <= 15', 'Safari <= 10', 'iOS <= 10.2', 'not < 0.02%'],
   svgo: {
     plugins: [
       {
@@ -164,6 +164,7 @@ function styles() {
     .pipe(gulp.dest(paths.styles.dest));
 }
 exports.styles = styles;
+
 
 // Javascript
 function deleteScripts(done) {
