@@ -51,8 +51,8 @@ const paths = {
 
 const config = {
   // see browserlist: http://browserl.ist/
-  browsers: ['last 4 versions', 'Safari >= 10.1', 'Firefox ESR', 'iOS >= 10.3', 'not IE <= 11', 'not < 0.05%'],
-  browsers_legacy: ['ie >= 10', 'Edge <= 15', 'Safari <= 10', 'iOS <= 10.2', 'not < 0.02%'],
+  browsers: ['last 4 versions', 'not Safari < 11', 'not iOS < 11', 'Firefox ESR', 'not Edge < 16', 'not IE <= 11', 'not IE_mob <= 11', 'not op_mini all', 'not op_mob <= 46', 'not Samsung < 8', 'not BlackBerry <= 10', 'not Baidu <= 10', 'not Android < 100', 'not QQAndroid < 10', 'not < 0.05%'],
+  browsers_legacy: ['last 6 versions', 'not ie < 10', 'not < 0.02%'],
   svgo: {
     plugins: [
       {
@@ -217,14 +217,7 @@ function scripts_main() {
     ], { sourcemaps: true })
     .pipe(sourcemaps.init())
     .pipe(
-      babel(Object.assign(
-        config.babel,
-        {
-          "plugins": [
-            ["transform-remove-console", { "exclude": ["error", "warn"] }]
-          ]
-        }
-      ))
+      babel(config.babel)
     )
     .pipe(concat('main.min.js'))
     .pipe(sourcemaps.write('./'))
@@ -428,4 +421,5 @@ const build = gulp.series(
   gulp.parallel(html, styles, scripts, fonts),
   images
 );
+exports.build = build;
 exports.default = build;
