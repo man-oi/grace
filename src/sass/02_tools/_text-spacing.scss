@@ -1,0 +1,29 @@
+@mixin text-spacing($value, $font-size-key: 'base', $viewport: 'lg', $responsive: true) {
+  @if ($responsive == true) {
+    $font: map-get(map-get($font-sizes, 'xs'), $font-size-key);
+    $font-size: nth($font, 1);
+    $line-height: nth($font, 2);
+
+    margin-bottom: ($base-spacing * map-get($spacing, $value)) - (($line-height - $font-size) / 2);
+
+    @for $i from 1 through length($font-sizes) {
+      $view: nth($font-sizes, $i);
+      $viewport: nth($view, 1);
+
+      @include breakpoint($viewport) {
+        $font: map-get(map-get($font-sizes, $viewport), $font-size-key);
+        $font-size: nth($font, 1);
+        $line-height: nth($font, 2);
+
+        margin-bottom: ($base-spacing * map-get($spacing, $value)) - (($line-height - $font-size) / 2);
+      }
+    }
+  }
+  @else {
+    $font: map-get(map-get($font-sizes, $viewport), $font-size);
+    $font-size: nth($font, 1);
+    $line-height: nth($font, 2);
+
+    margin-bottom: ($base-spacing * map-get($spacing, $value)) - (($line-height - $font-size) / 2);
+  }
+}

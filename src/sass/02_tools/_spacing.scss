@@ -2,7 +2,7 @@
   @return $base-spacing * map_get($spacing, $value);
 }
 
-@function text-spacing($value, $font-size: 'base', $viewport: 'lg', $responsive: true) {
+@function text-spacing($value, $font-size: 'base', $viewport: 'lg') {
   $font: map-get(map-get($font-sizes, $viewport), $font-size);
   $font-size: nth($font, 1);
   $line-height: nth($font, 2);
