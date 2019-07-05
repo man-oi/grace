@@ -163,7 +163,7 @@ function styles() {
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(paths.styles.dest));
 }
-exports.styles = styles;
+gulp.task('styles', styles);
 
 
 // Javascript
@@ -274,7 +274,7 @@ const scripts = gulp.series(
   scripts_main_legacy,
   scripts_main
 );
-exports.scripts = scripts;
+gulp.task('scripts', scripts);
 
 const scripts_dev = gulp.series(
   deleteScripts,
@@ -283,7 +283,7 @@ const scripts_dev = gulp.series(
   scripts_main_dev_legacy,
   scripts_main_dev
 );
-exports.scripts_dev = scripts_dev;
+gulp.task('scripts_dev', scripts_dev);
 
 
 // HTML
@@ -368,7 +368,7 @@ const images = gulp.series(
   imagemin_highq,
   imagemin_lossless,
 );
-exports.images = images;
+gulp.task('images', images);
 
 
 // FONTS
@@ -387,7 +387,7 @@ const fonts = gulp.series(
   delete_fonts,
   copy_fonts
 );
-exports.fonts = fonts;
+gulp.task('fonts', fonts);
 
 
 /*
@@ -405,7 +405,7 @@ const watch = () => {
   );
   gulp.watch(`${paths.fonts.src}/**/*`, gulp.series(fonts, reload));
 };
-exports.watch = watch;
+gulp.task('watch', watch);
 
 
 const dev = gulp.series(
@@ -413,7 +413,7 @@ const dev = gulp.series(
   serve,
   watch
 );
-exports.dev = dev;
+gulp.task('dev', dev);
 
 
 const build = gulp.series(
@@ -421,5 +421,5 @@ const build = gulp.series(
   gulp.parallel(html, styles, scripts, fonts),
   images
 );
-exports.build = build;
-exports.default = build;
+gulp.task('build', build);
+gulp.task('default', build);
