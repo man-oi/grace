@@ -1,5 +1,5 @@
-@import '00_webfonts/webfonts';
 @import '00_functions/base';
+@import '00_webfonts/webfonts';
 
 // import settings
 @import '01_settings/font-families';
@@ -16,6 +16,7 @@
 @import '02_tools/font-size';
 @import '02_tools/media-queries';
 @import '02_tools/spacing';
+@import '02_tools/text-spacing';
 
 // import generics
 @import '03_generic/grid';
@@ -39,6 +40,7 @@
 
 // import atoms
 @import '06_atoms/icons';
+@import '06_atoms/text';
 
 // import elements
 @import '07_elements/centered-content-box';
