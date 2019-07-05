@@ -1,8 +1,6 @@
 function graceProduce(selector, Subject, ...params) {
   if (typeof selector === 'string' && typeof Subject === 'function') {
-    [].slice.call(document.querySelectorAll(selector)).forEach((el) => {
-      return new Subject(el, ...params);
-    });
+    [].slice.call(document.querySelectorAll(selector)).forEach(el => new Subject(el, ...params));
   }
 }
 
