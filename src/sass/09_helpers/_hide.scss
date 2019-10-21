@@ -11,6 +11,12 @@
   }
 }
 
+@include breakpoint(lg-and-below) {
+  .hide-lg-and-below {
+    display: none;
+  }
+}
+
 
 // BREAKPOINT MD
 @include breakpoint(md) {
@@ -25,8 +31,8 @@
   }
 }
 
-@include breakpoint(md-and-up) {
-  .hide-md-and-up {
+@include breakpoint(md-and-below) {
+  .hide-md-and-below {
     display: none;
   }
 }
@@ -45,16 +51,16 @@
   }
 }
 
-@include breakpoint(sm-and-up) {
-  .hide-sm-and-up {
+@include breakpoint(sm-and-below) {
+  .hide-sm-and-below {
     display: none;
   }
 }
 
 
 // BREAKPOINT XS
-@include breakpoint(xs) {
-  .hide-xs {
+@include breakpoint(xs-and-below) {
+  .hide-xs-and-below {
     display: none;
   }
 }

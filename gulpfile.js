@@ -51,8 +51,8 @@ const paths = {
 
 const config = {
   // see browserlist: http://browserl.ist/
-  browsers: ['Safari >= 10.1', 'Firefox >= 60', 'Chrome >= 61', 'iOS >= 10.3', 'not IE <= 11', 'Edge >= 16'],
-  browsers_legacy: ['last 4 versions', '> 1%', 'not ie <= 10', 'not Edge <= 13', 'Safari >= 8', 'Firefox ESR'],
+  browsers: ['last 4 versions', 'not Safari < 11', 'not iOS < 11', 'Firefox ESR', 'not Edge < 16', 'not IE <= 11', 'not IE_mob <= 11', 'not op_mini all', 'not op_mob <= 46', 'not Samsung < 8', 'not BlackBerry <= 10', 'not Baidu <= 10', 'not Android < 100', 'not QQAndroid < 10', 'not < 0.05%'],
+  browsers_legacy: ['last 6 versions', 'not ie < 10', 'not < 0.02%'],
   svgo: {
     plugins: [
       {
@@ -164,7 +164,8 @@ function styles() {
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(paths.styles.dest));
 }
-exports.styles = styles;
+gulp.task('styles', styles);
+
 
 // Javascript
 function deleteScripts(done) {
@@ -217,14 +218,7 @@ function scripts_main() {
     ], { sourcemaps: true })
     .pipe(sourcemaps.init())
     .pipe(
-      babel(Object.assign(
-        config.babel,
-        {
-          "plugins": [
-            ["transform-remove-console", { "exclude": ["error", "warn"] }]
-          ]
-        }
-      ))
+      babel(config.babel)
     )
     .pipe(concat('main.min.js'))
     .pipe(sourcemaps.write('./'))
@@ -281,7 +275,7 @@ const scripts = gulp.series(
   scripts_main_legacy,
   scripts_main
 );
-exports.scripts = scripts;
+gulp.task('scripts', scripts);
 
 const scripts_dev = gulp.series(
   deleteScripts,
@@ -290,7 +284,7 @@ const scripts_dev = gulp.series(
   scripts_main_dev_legacy,
   scripts_main_dev
 );
-exports.scripts_dev = scripts_dev;
+gulp.task('scripts_dev', scripts_dev);
 
 
 // HTML
@@ -375,7 +369,7 @@ const images = gulp.series(
   imagemin_highq,
   imagemin_lossless,
 );
-exports.images = images;
+gulp.task('images', images);
 
 
 // FONTS
@@ -394,7 +388,7 @@ const fonts = gulp.series(
   delete_fonts,
   copy_fonts
 );
-exports.fonts = fonts;
+gulp.task('fonts', fonts);
 
 
 /*
@@ -412,7 +406,7 @@ const watch = () => {
   );
   gulp.watch(`${paths.fonts.src}/**/*`, gulp.series(fonts, reload));
 };
-exports.watch = watch;
+gulp.task('watch', watch);
 
 
 const dev = gulp.series(
@@ -421,7 +415,7 @@ const dev = gulp.series(
   serve,
   watch
 );
-exports.dev = dev;
+gulp.task('dev', dev);
 
 
 const build = gulp.series(
