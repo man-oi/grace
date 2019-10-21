@@ -140,7 +140,8 @@ function serve(done) {
   server.init({
     server: {
       baseDir: './dist/'
-    }
+    },
+    open: false
   });
   done();
 }
@@ -293,7 +294,7 @@ exports.scripts_dev = scripts_dev;
 
 
 // HTML
-function html() {
+function htmlminify() {
   return gulp.src(`${paths.html.src}/**/*.html`)
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest(paths.html.dest));
@@ -334,7 +335,7 @@ function imagemin_compress() {
     ])
     .pipe(imagemin([
       mozjpeg({progressive: true, quality: 85}),
-      pngquant({speed: 6, quality: 80}),
+      pngquant({speed: 6, quality: [0.8, 0.9]}),
       svgo(config.svgo)
     ]))
     .pipe(gulp.dest(paths.images.dest))
@@ -349,7 +350,7 @@ function imagemin_highq() {
   ])
   .pipe(imagemin([
     mozjpeg({progressive: true, quality: 95}),
-    pngquant({speed: 6, quality: 95}),
+    pngquant({speed: 6, quality: [0.9, 0.97]}),
   ]))
   .pipe(gulp.dest(`${paths.images.dest}_highq`))
 }
@@ -363,7 +364,7 @@ function imagemin_lossless() {
   ])
   .pipe(imagemin([
     jpegtran({progessive: true}),
-    pngquant({speed: 6, quality: 100}),
+    pngquant({speed: 6, quality: [1]}),
   ]))
   .pipe(gulp.dest(`${paths.images.dest}_lossless`))
 }
@@ -415,7 +416,8 @@ exports.watch = watch;
 
 
 const dev = gulp.series(
-  gulp.parallel(html, styles, scripts_dev, fonts),
+  include,
+  gulp.parallel(styles, scripts_dev, fonts),
   serve,
   watch
 );
@@ -424,7 +426,9 @@ exports.dev = dev;
 
 const build = gulp.series(
   include,
-  gulp.parallel(html, styles, scripts, fonts),
+  gulp.parallel(htmlminify, styles, scripts, fonts),
   images
 );
+exports.build = build;
+
 exports.default = build;
