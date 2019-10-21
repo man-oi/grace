@@ -22,7 +22,7 @@
           line-height: nth(map-get(map-get($font-sizes, $viewport), $size), 2) / nth(map-get(map-get($font-sizes, $viewport), $size), 1);
         }
 
-        @if ($max-size < strip-unit(map-get($breakpoints, $viewport))) {
+        @if ($max-size + 1 < strip-unit(map-get($breakpoints, $viewport))) {
           @media (max-width: map-get($breakpoints, $viewport)) {
             font-size: nth(map-get(map-get($font-sizes, $viewport), $size), 1);
             line-height: nth(map-get(map-get($font-sizes, $viewport), $size), 2) / nth(map-get(map-get($font-sizes, $viewport), $size), 1);
